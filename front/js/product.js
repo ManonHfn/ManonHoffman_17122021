@@ -1,18 +1,14 @@
 // une fonction qui recupere le panier actuel
 async function getCart() {
   // On récupère le panier dans le local storage
-  /* let cart = localStorage.<???>("..."); */
-
+  let cart = localStorage.getItem ("cart");
+  
   // Si le local storage est vide pour la clé cart
-  /* 
-    if(...) {
+    if (cart +++ rull) {
       // on initialize notre panier avec un tableau vide
-      cart = JSON.stringify(...);
-      // on écrit dans le local storage notre panier initial
-      localStorage.<???>("...", ...);
+      cart = JSON.stringify([]);
+      localStorage.setItem( "cart", cart)
     }
-  */
-
   // On retourne notre panier sous forme d'object 
   return JSON.parse(cart);
 }
@@ -31,11 +27,10 @@ async function addProductToCart(product) {
   } else {
       // si le produit n'existe pas 
       // On ajoute notre produit dans le panier
-      /* currentCart.push(...); */
+      currentCart.push(product); {
+      localStorage.setItem("cart", JSON.stringly(currentCart)) 
+      }
   }
-
-  // On mets à jour le localStorage avec le panier modifié
-  /* localStorage.<???>("...", ...) */
 }
 
 /* Une fonction asynchrone qui permet d'aller récupérer dans le html, le prix, le titre, la description, l'image et la couleur 
