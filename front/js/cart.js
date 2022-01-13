@@ -112,13 +112,13 @@ function validateForm(event) {
     
   })
 
-  // si le formulaire est toujours valide
+    // si le formulaire est toujours valide
   if(isFormValid){
 
     // on confirme le panier
     confirmCart();
   } else {
-    // sinon on invalide le panier
+    // Ou on invalide le panier
     invalidCart();
   }
 }
@@ -126,26 +126,43 @@ button.addEventListener("click", validateForm)
 
 function confirmCart(){
   // Vider le localStorage
+  localStorage.clear()
   // Remplacer par une URL propre (let url = )
   window.location.assign("http://127.0.0.1:5500/front/html/confirmation.html")
 }
-
+// Afficher un message d'erreur 
 function invalidCart(){
-  console.log("Ce n'est pas bon !")
+  window.alert("Une erreur a été trouvée dans le formulaire.");
 }
 
-// Etape 1
-// On récupère les elements du formulaire avec querySelector
-// - les champs
-// - le bouton de confirmation
-
-// Etape 2
-// définir une fonction de vérification du formulaire
-// la fonction doit vérifier que les champs ont correctement été remplis (bien vérifier l'email en js)
-
-// Etape 3 
-// Ajouter une fonction de vérification du formulaire au click sur le bouton commander
-// Si le formulaire est valide on efface le contenu de notre local storage 
-// et on redirige l'utilisateur sur la page de confirmation
-// Sinon on affiche une alerte
-
+// Création d'un objet pour la confirmation
+const ConfirmationUser = {
+  "contact":
+    "firstName": "Toto", 
+    "lastName": "Tutu", 
+    "address": "12 rue des Oliviers", 
+    "city": "Utopia", 
+    "email": "MonEmail@exmple.com"
+};
+const options = {
+  "method": "POST",
+  "headers": [
+    // le format de ce qu'on veut en retour
+    "Accept"="application/json",
+    // le format de ce qu'on envoie
+    "Content-Type"="application/json" 
+  ],
+  // data c'est l'object qui contiendra ce qu'on veut envoyer
+  body: JSON.stringify(data) 
+}
+//
+const response = await fetch(url, options);
+if (response.ok) {
+    //
+    return response
+} else {
+    //
+}
+} catch (error) {
+    //
+}
