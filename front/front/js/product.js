@@ -1,36 +1,44 @@
 // une fonction qui recupere le panier actuel
 async function getCart() {
   // On récupère le panier dans le local storage
-  let cart = localStorage.getItem ("cart");
-  
+  let cart = localStorage.getItem("cart");
+
   // Si le local storage est vide pour la clé cart
-    if (cart +++ rull) {
-      // on initialize notre panier avec un tableau vide
-      cart = JSON.stringify([]);
-      localStorage.setItem( "cart", cart)
-    }
-  // On retourne notre panier sous forme d'object 
+  if (cart === null) {
+    // on initialize notre panier avec un tableau vide
+    cart = JSON.stringify([]);
+    localStorage.setItem("cart", cart);
+  }
+  // On retourne notre panier sous forme d'object
   return JSON.parse(cart);
 }
 
 // une fonction qui ajoute le produit au panier en utilisant le panier actuel
 async function addProductToCart(product) {
-    // On récupère le panier actuel dans le local storage via notre function
-  const currentCart = await getCart(); 
+  if(product.color === "") {
+    return alert("Veuillez choisir une couleur");
+  }
+  
+  // On récupère le panier actuel dans le local storage via notre function
+  const currentCart = await getCart();
+
 
   // On regarde si un produit avec le meme _id et la meme couleur existe dans le panier
-  const foundProduct = currentCart.find(cartItem => cartItem._id === product._id && cartItem.color === product.color);
+  const foundProduct = currentCart.find(
+    (cartItem) => cartItem._id === product._id && cartItem.color === product.color
+  );
 
   // Si un produit existe
-  if(foundProduct !== undefined) {
-    foundProduct.quantity = parseInt(foundProduct.quantity) + parseInt(product.quantity)
+  if (foundProduct !== undefined) {
+    foundProduct.quantity = parseInt(foundProduct.quantity) + parseInt(product.quantity);
   } else {
-      // si le produit n'existe pas 
-      // On ajoute notre produit dans le panier
-      currentCart.push(product); {
-      localStorage.setItem("cart", JSON.stringly(currentCart)) 
-      }
+    // si le produit n'existe pas
+    // On ajoute notre produit dans le panier
+    currentCart.push(product);
   }
+
+  localStorage.setItem("cart", JSON.stringify(currentCart));
+  alert("Vous venez d'ajouter un produit au panier");
 }
 
 /* Une fonction asynchrone qui permet d'aller récupérer dans le html, le prix, le titre, la description, l'image et la couleur 
@@ -58,6 +66,7 @@ async function displayProduct(product) {
   // On vient concatener le html généré via les données du produit
   imageContainer.innerHTML = `<img src="${product.imageUrl}" alt="${product.description}">`;
 
+  console.log(product.colors);
   // On boucle sur notre liste de couleur
   for (let i = 0; i < product.colors.length; i++) {
     // pour chaque couleur
@@ -69,14 +78,14 @@ async function displayProduct(product) {
   addProductButton.onclick = function () {
     // On crée notre produit à ajouter
     const productToAdd = {
-        _id: product._id,
-        name: product.name,
-        description: product.description,
-        imageUrl: product.imageUrl,
-        price: product.price,
-        color: colorsInput.value, // on récupère la valeur du select des couleurs
-        quantity: quantityInput.value // on récupère la valeur de l'input de la quantité
-    }
+      _id: product._id,
+      name: product.name,
+      description: product.description,
+      imageUrl: product.imageUrl,
+      price: product.price,
+      color: colorsInput.value, // on récupère la valeur du select des couleurs
+      quantity: quantityInput.value, // on récupère la valeur de l'input de la quantité
+    };
 
     // On appelle notre fonction addProductToCart avec notre produit à ajouter
     addProductToCart(productToAdd);
