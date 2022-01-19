@@ -13,7 +13,7 @@ async function getCart() {
   // On retourne notre panier sous forme d'object
   return JSON.parse(cart);
 }
-
+// On retire le produit 
 async function removeItemFromCart(productId, productColor) {
   const currentCart = await getCart();
   
@@ -32,14 +32,14 @@ async function removeItemFromCart(productId, productColor) {
   window.location.reload();
 
 }
-
+// On convertit obligatoirement en euro
 function formatPrice(price) {
   return new Intl.NumberFormat("fr-FR", {
     style: "currency",
     currency: "EUR",
   }).format(parseInt(price));
 }
-
+// On récupère le produit et on l'affiche dans le panier
 function generateCartItemHtml(cartItem) {
   let htmlCartItem = `
       <article class="cart__item" data-id="${cartItem._id}" data-color="${
@@ -72,7 +72,7 @@ function generateCartItemHtml(cartItem) {
 
   return htmlCartItem;
 }
-
+// On affiche un prix total
 async function getTotalPrice(cartItems) {
   let price = 0;
 
@@ -82,7 +82,7 @@ async function getTotalPrice(cartItems) {
   }
   return formatPrice(price);
 }
-
+// ??
 async function displayCart() {
   // On récupère le container du panier
   const cartContainer = document.querySelector("#cart__items");
@@ -107,11 +107,11 @@ async function displayCart() {
   cartItemsDOM.forEach(cartItem => {
     const productId = cartItem.dataset.id;
     const color = cartItem.dataset.color;
-
+    // On supprime un produit en clickant sur le bouton supprimé
     cartItem.querySelector('.deleteItem').addEventListener('click', function (event) {
       removeItemFromCart(productId, color)
     });
-
+    // On change la quantité des produits
     cartItem.querySelector('.itemQuantity').addEventListener('change', function (event) {
       // valeur de l'input
       const value = event.target.value; 
@@ -128,13 +128,13 @@ displayCart();
 
 const button = document.querySelector("#order");
 console.log(button);
-
+// On vérifie que l'email est bien noté
 function isEmailValid(email) {
   let re =
     /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
   return re.test(email);
 }
-
+// On valide le formulaire
 async function validateForm(event) {
   event.preventDefault();
   // Par défaut le formulaire est valide
@@ -182,7 +182,7 @@ async function validateForm(event) {
 if(button !== null) {
   button.addEventListener("click", validateForm); 
 }
-
+// On affiche le numéro de commande
 async function sendOrder(orderData) {
   const options = {
     method: "POST",
@@ -202,7 +202,7 @@ async function sendOrder(orderData) {
     return false;
   }
 }
-
+// On confirme la commande
 async function confirmCart(orderData) {
 
   const result = await sendOrder(orderData);
@@ -214,14 +214,14 @@ async function confirmCart(orderData) {
     window.location.assign("http://127.0.0.1:5500/front/html/confirmation.html?orderId=" + orderId)
   }
 }
-
+// Affiche une erreur si le client remplit mal le formulaire
 function invalidCart() {
   window.alert(
     "Merci de bien vouloir remplir correctement les champs ci-dessous"
   );
 }
 
-
+// ??
 function displayOrderId(orderId) {
   const orderIdContainer = document.querySelector("#orderId");
   orderIdContainer.textContent = orderId
@@ -235,6 +235,7 @@ const params = Object.fromEntries(urlSearchParams.entries());
 if (params.orderId !== undefined) {
   displayOrderId(params.orderId);
 }
+
 // Gestion de la modification de quantité
 function changeQuantity() {
   document.querySelectorAll(".itemQuantity").forEach((btn) => {
