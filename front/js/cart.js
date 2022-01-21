@@ -107,20 +107,23 @@ async function displayCart() {
   cartItemsDOM.forEach(cartItem => {
     const productId = cartItem.dataset.id;
     const color = cartItem.dataset.color;
+
     // On supprime un produit en clickant sur le bouton supprimé
     cartItem.querySelector('.deleteItem').addEventListener('click', function (event) {
       removeItemFromCart(productId, color)
     });
-    // On change la quantité des produits
-    const value = event.target.value; 
-    let ps = document.getElementsByTagName('cart__item');
-
-      for(let i = 0; i < ps.length; i++){
+    // On ajoute un évenement au changement de l'input
     cartItem.querySelector('.itemQuantity').addEventListener('change', function (event) {
-      // valeur de l'input
-    })
+    //On récupère la quantité dans le panier 
+    let value = event.target.value
+    // On récupère notre panier dans le local storage
+    let cart = localStorage.getItem("cart");
+    //On selectionne l'element à modifier en fonction de son id et de sa couleur
+  
+    // On modifie la valeur dans le panier 
 
-  })
+    // On refresh le localStorage
+    location.reload();
 
   // On affiche le prix total
   const totalPriceContainer = document.querySelector("#totalPrice");
