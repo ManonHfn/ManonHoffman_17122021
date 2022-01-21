@@ -112,9 +112,12 @@ async function displayCart() {
       removeItemFromCart(productId, color)
     });
     // On change la quantité des produits
+    const value = event.target.value; 
+    let ps = document.getElementsByTagName('cart__item');
+
+      for(let i = 0; i < ps.length; i++){
     cartItem.querySelector('.itemQuantity').addEventListener('change', function (event) {
       // valeur de l'input
-      const value = event.target.value; 
     })
 
   })
