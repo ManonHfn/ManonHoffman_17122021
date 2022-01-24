@@ -241,23 +241,3 @@ const params = Object.fromEntries(urlSearchParams.entries());
 if (params.orderId !== undefined) {
   displayOrderId(params.orderId);
 }
-
-// Gestion de la modification de quantité
-function changeQuantity() {
-  document.querySelectorAll(".itemQuantity").forEach((btn) => {
-    btn.addEventListener("change", (e) => {
-      for (let l = 0; l < cartItem.length; l++) {
-        if (
-          cartItem._id === e.target.dataset.id &&
-          cartItem.color === e.target.dataset.color
-        ) {
-          cartItem.quantity = e.target.value;
-          localStorage.setItem("panier", JSON.stringify(cartItem));
-          calculTotal();
-          window.location.reload();
-          return;
-        }
-      }
-    });
-  });
-}
